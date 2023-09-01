@@ -1,0 +1,7 @@
+unzip("exdata_data_NEI_data.zip")
+NEI <- readRDS("summaryscc_PM25.rds")
+nei_sub <- subset(NEI, fips == "24510")
+total_emission <- tapply(nei_sub$Emissions, nei_sub$year, sum)
+png("plot2.png")
+barplot(total_emission, col = "darkturquoise", xlab = "Year", ylab = "Total Emission in tons", main = "Total particle emission over years in Baltimore City", ylim = c(0, 3500))
+dev.off()

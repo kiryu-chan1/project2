@@ -1,0 +1,13 @@
+library(dplyr)
+unzip("exdata_data_NEI_data.zip")
+SCC <- readRDS("Source_Classification_Code.rds")
+NEI <- readRDS("summaryscc_PM25.rds")
+str(SCC)
+coal <- subset(SCC, grepl("Comb.*Coal", EI.Sector))
+scc <- coal$SCC
+selected <- filter(NEI, SCC %in% scc)
+selected <- group_by(selected, year)
+total_emission <- tapply(selected$Emissions, selected$year, sum)
+png("plot4.png")
+barplot(total_emission/10^3, col = "darkturquoise", xlab = "Year", ylab = "Total Emission in kilotons", main = "Total coal combustion emission over years", ylim = c(0, 600))
+dev.off()

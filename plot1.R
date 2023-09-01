@@ -1,0 +1,7 @@
+unzip("exdata_data_NEI_data.zip")
+NEI <- readRDS("summarySCC_PM25.rds")
+str(NEI)
+total_emission <- tapply(NEI$Emissions, NEI$year, sum)
+png("Plot1.png")
+barplot(total_emission/10^6, col = "darkturquoise", xlab = "Year", ylab = "Total Emission in Megatons", main = "Total particle emission over years", ylim = c(0,8))
+dev.off()
